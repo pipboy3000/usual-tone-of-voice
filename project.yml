@@ -2,11 +2,14 @@ name: UsualToneOfVoiceApp
 options:
   bundleIdPrefix: local
   deploymentTarget:
-    macOS: "15.0"
+    macOS: "14.0"
+packages:
+  WhisperBinary:
+    path: Packages/WhisperBinary
 settings:
   base:
     SWIFT_VERSION: "5.9"
-    MACOSX_DEPLOYMENT_TARGET: "15.0"
+    MACOSX_DEPLOYMENT_TARGET: "14.0"
     CURRENT_PROJECT_VERSION: 1
     MARKETING_VERSION: 0.1.0
     CODE_SIGNING_ALLOWED: NO
@@ -35,3 +38,6 @@ targets:
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: local.UsualToneOfVoice
+    dependencies:
+      - package: WhisperBinary
+        product: whisper

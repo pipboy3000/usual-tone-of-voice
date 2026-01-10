@@ -1,5 +1,5 @@
-Place a bundled whisper.cpp binary here (optional).
-Expected filename: whisper-cli
+This directory is reserved for app resources.
+whisper.cpp is linked via an XCFramework, so no CLI binary is required.
 
 If present, the app will prefer this bundled binary over system paths.
 

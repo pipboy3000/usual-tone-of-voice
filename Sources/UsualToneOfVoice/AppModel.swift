@@ -118,7 +118,6 @@ final class AppModel: ObservableObject {
         let language = settings.language.isEmpty ? nil : settings.language
         let autoPaste = settings.autoPaste
         let initialPrompt = settings.initialPrompt
-        let whisperCppPath = ""
         let whisperCppModelPath = ModelManager.defaultModelPath().path
         let beamSize = 8
         let bestOf = 8
@@ -137,7 +136,6 @@ final class AppModel: ObservableObject {
             do {
                 let rawText = try whisperCppTranscriber.transcribe(
                     audioURL: audioURL,
-                    whisperCppPath: whisperCppPath,
                     modelPath: whisperCppModelPath,
                     language: language,
                     initialPrompt: initialPrompt,

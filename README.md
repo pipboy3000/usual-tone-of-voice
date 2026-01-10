@@ -1,17 +1,25 @@
-# Usual Tone of Voice
+# Usual Tone of Voice 🎙️
 
-Menu bar voice-to-Codex helper for macOS.
+Menu bar voice-to-text helper for macOS that keeps your usual tone and flow.
 
-## What's included
-- Menu bar app UI (SwiftUI `MenuBarExtra`)
-- Double-press Command key hotkey to start/stop recording
-- WAV recording (16 kHz, mono)
-- Whisper CLI transcription
-- Clipboard + optional auto paste
-- Notifications + recent log lines
+## Purpose ✨
+Capture your spoken thoughts quickly, transcribe them locally, and paste the text wherever you’re typing. Ideal for short notes, drafts, and chat replies without breaking your rhythm.
 
-## Run (Swift Package)
-Open the folder in Xcode and run the executable target, or from Terminal:
+## Features ✅
+- 🎛️ Menu bar app UI (SwiftUI `MenuBarExtra`)
+- ⌘⌘ Double-press Command key to start/stop recording
+- 🎧 WAV recording (16 kHz, mono)
+- 🧠 Local transcription via embedded whisper.cpp
+- 📝 Customizable transcription prompt (Initial Prompt in Settings)
+- 📋 Clipboard + optional auto paste
+
+## Build with Xcode 🛠️
+Open `UsualToneOfVoiceApp.xcodeproj` in Xcode and run the app target.
+The first build will download the prebuilt whisper.cpp XCFramework via Swift Package Manager.
+
+## Swift Package (CLI only) 🧩
+Opening `Package.swift` builds a CLI executable (no .app bundle, so Accessibility cannot be granted).
+If you still want to run the CLI target:
 
 ```bash
 swift run
@@ -21,24 +29,11 @@ swift run
 - Microphone access (recording)
 - Accessibility (auto paste)
 
-If you package this as an .app in Xcode, add these to the app target:
-- `NSMicrophoneUsageDescription` in Info.plist
-- App Sandbox > Audio Input (if sandboxed)
-- Accessibility permission (System Settings -> Privacy & Security -> Accessibility)
-
-## Whisper CLI
-The app uses `whisper-cli` (whisper.cpp) and looks in:
-- Bundled app resources (if you package the binary)
-- `/opt/homebrew/bin/whisper-cli` or `/opt/homebrew/bin/whisper-cpp`
-- `/usr/local/bin/whisper-cli` or `/usr/local/bin/whisper-cpp`
-
-There is currently no UI setting for the CLI path.
-
-## Models
+## Model Download Notice 📦
 The app auto-downloads the default whisper.cpp model to:
 `~/Library/Application Support/UsualToneOfVoice/Models`.
-If the model is missing at transcription time, it will download in the background and report progress in Settings.
+If the model is missing at transcription time, it will download in the background and report progress in Settings. This requires a network connection on first download.
 
-## Notes
-- Hotkey: double-press Command (Cmd+Cmd)
-- Output mode: Clipboard + Auto Paste (toggle in menu)
+## Third-party notices
+This app uses whisper.cpp and Whisper model weights. See `THIRD_PARTY_NOTICES.md`.
+

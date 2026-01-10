@@ -22,6 +22,7 @@
 		9C499F2E9E0A901F90DFB0F7 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6DD09381E8BA44B755C0B0 /* SettingsView.swift */; };
 		A1FE82FBCAF16EA6E21FA6B4 /* TextNormalizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 583AE597F69AA9CA866298F4 /* TextNormalizer.swift */; };
 		B1BE2208D9A301D4F9D1A0DC /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E71BB0D0B9CB60C01FF18FE5 /* AppModel.swift */; };
+		B68E491FF0BD24E2B616B10D /* whisper in Frameworks */ = {isa = PBXBuildFile; productRef = 2915C1652BF9FD08A1E74229 /* whisper */; };
 		C8362F9E81A2164209C16FD0 /* SoundPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71DD00AF4B4A2D752EA1DB4 /* SoundPlayer.swift */; };
 		DD64B2EE39177A76E14A56A3 /* Recorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E9F0C4F5DC59F6E7D57376 /* Recorder.swift */; };
 		DF7BD834844FA680AD1B66C3 /* Dispatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8F99ACF62E3DA0AF46DD042 /* Dispatcher.swift */; };
@@ -44,6 +45,7 @@
 		A8E9F0C4F5DC59F6E7D57376 /* Recorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recorder.swift; sourceTree = "<group>"; };
 		C6FFB53B9BBFA2DFE7918DF1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CA91A361265459B067B1FA52 /* SettingsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsStore.swift; sourceTree = "<group>"; };
+		D0B2C472B0EC5B58614FD6BE /* WhisperBinary */ = {isa = PBXFileReference; lastKnownFileType = folder; name = WhisperBinary; path = Packages/WhisperBinary; sourceTree = SOURCE_ROOT; };
 		DC6DD09381E8BA44B755C0B0 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		E71BB0D0B9CB60C01FF18FE5 /* AppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModel.swift; sourceTree = "<group>"; };
 		F71DD00AF4B4A2D752EA1DB4 /* SoundPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundPlayer.swift; sourceTree = "<group>"; };
@@ -51,10 +53,30 @@
 		FF576B4A715D72678F0C7F4A /* MenuContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuContentView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFrameworksBuildPhase section */
+		2B4ED8A46640BAE384B05DAB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B68E491FF0BD24E2B616B10D /* whisper in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
 /* Begin PBXGroup section */
+		1B5850A4524E75FA7945575F /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				D0B2C472B0EC5B58614FD6BE /* WhisperBinary */,
+			);
+			path = Packages;
+			sourceTree = "<group>";
+		};
 		1C584DEED8479745836EE9F0 = {
 			isa = PBXGroup;
 			children = (
+				1B5850A4524E75FA7945575F /* Packages */,
 				9CFD99B86AA9CFDEA5D9FD28 /* UsualToneOfVoice */,
 				3B6F334049AF491847CA3F12 /* Products */,
 			);
@@ -120,6 +142,7 @@
 			buildPhases = (
 				6ACB0F4EF245ECCE6D760D29 /* Sources */,
 				8BF55BDE107BD3D789B79D47 /* Resources */,
+				2B4ED8A46640BAE384B05DAB /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -127,6 +150,7 @@
 			);
 			name = UsualToneOfVoice;
 			packageProductDependencies = (
+				2915C1652BF9FD08A1E74229 /* whisper */,
 			);
 			productName = UsualToneOfVoice;
 			productReference = 752F1D8E26B3665C382B16EC /* UsualToneOfVoice.app */;
@@ -156,6 +180,9 @@
 			);
 			mainGroup = 1C584DEED8479745836EE9F0;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				46CE5C4CA13C9A69D1ECF376 /* XCLocalSwiftPackageReference "Packages/WhisperBinary" */,
+			);
 			preferredProjectObjectVersion = 77;
 			projectDirPath = "";
 			projectRoot = "";
@@ -255,7 +282,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MARKETING_VERSION = 0.1.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -353,7 +380,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MARKETING_VERSION = 0.1.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -388,6 +415,20 @@
 			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		46CE5C4CA13C9A69D1ECF376 /* XCLocalSwiftPackageReference "Packages/WhisperBinary" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Packages/WhisperBinary;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		2915C1652BF9FD08A1E74229 /* whisper */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = whisper;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 3736C5D7907A3352E1EDC627 /* Project object */;
 }
