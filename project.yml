@@ -1,0 +1,37 @@
+name: UsualToneOfVoiceApp
+options:
+  bundleIdPrefix: local
+  deploymentTarget:
+    macOS: "15.0"
+settings:
+  base:
+    SWIFT_VERSION: "5.9"
+    MACOSX_DEPLOYMENT_TARGET: "15.0"
+    CURRENT_PROJECT_VERSION: 1
+    MARKETING_VERSION: 0.1.0
+    CODE_SIGNING_ALLOWED: NO
+    CODE_SIGNING_REQUIRED: NO
+    CODE_SIGN_IDENTITY: ""
+    DEVELOPMENT_TEAM: ""
+targets:
+  UsualToneOfVoice:
+    type: application
+    platform: macOS
+    sources:
+      - path: Sources/UsualToneOfVoice
+        excludes:
+          - Resources/**
+    resources:
+      - path: Sources/UsualToneOfVoice/Resources
+      - path: Sources/UsualToneOfVoice/Assets.xcassets
+    info:
+      path: XcodeSupport/Info.plist
+      properties:
+        CFBundleDisplayName: "Usual Tone of Voice"
+        LSApplicationCategoryType: "public.app-category.utilities"
+        NSHighResolutionCapable: true
+        NSMicrophoneUsageDescription: "Record audio to transcribe speech."
+        NSPrincipalClass: "NSApplication"
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: local.UsualToneOfVoice
