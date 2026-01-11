@@ -10,7 +10,7 @@ Capture your spoken thoughts quickly, transcribe them locally, and paste the tex
 - ⌘⌘ Double-press Command key to start/stop recording
 - 🎧 WAV recording (16 kHz, mono)
 - 🧠 Local transcription via embedded whisper.cpp
-- 📝 Customizable transcription prompt (Initial Prompt in Settings)
+- 📝 Customizable transcription prompt (弱いヒント / 要約や書き換えには不向き)
 - 📋 Clipboard + optional auto paste
 
 ## Build with Xcode 🛠️
@@ -34,6 +34,8 @@ The app auto-downloads the default whisper.cpp model to:
 `~/Library/Application Support/UsualToneOfVoice/Models`.
 If the model is missing at transcription time, it will download in the background and report progress in Settings. This requires a network connection on first download.
 
+## Initial Prompt の期待値
+Initial Prompt は、用語や書式の傾向に寄せるための「弱いヒント」です。効果は保証されず、要約・書き換え・厳密なルールの強制には向きません。
+
 ## Third-party notices
 This app uses whisper.cpp and Whisper model weights. See `THIRD_PARTY_NOTICES.md`.
-

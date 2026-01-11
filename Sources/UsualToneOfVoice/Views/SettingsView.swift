@@ -27,8 +27,11 @@ struct SettingsView: View {
                     }
                     Text("Initial Prompt")
                         .font(.system(size: 12, weight: .semibold))
+                    Text("用語や口調に寄せるための弱いヒントです。効果は保証されず、要約や書き換えには向きません。")
+                        .font(.system(size: 11))
+                        .foregroundStyle(.secondary)
                     InsetTextEditor(text: $settings.initialPrompt, fontSize: 12, inset: 6)
-                        .frame(minHeight: 140)
+                        .frame(minHeight: 90)
                         .overlay(
                             RoundedRectangle(cornerRadius: 6)
                                 .stroke(Color.secondary.opacity(0.2))
@@ -63,4 +66,3 @@ struct SettingsView: View {
         }
     }
 }
-
