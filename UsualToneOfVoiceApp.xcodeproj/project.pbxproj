@@ -21,9 +21,11 @@
 		9AEC5FC3697FE6E73FAB8F7C /* InsetTextEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D422D4416877A69ED843CCA /* InsetTextEditor.swift */; };
 		9C499F2E9E0A901F90DFB0F7 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6DD09381E8BA44B755C0B0 /* SettingsView.swift */; };
 		A1FE82FBCAF16EA6E21FA6B4 /* TextNormalizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 583AE597F69AA9CA866298F4 /* TextNormalizer.swift */; };
+		B2C3D4E5F60708090A0B0C0D /* KeychainStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0B1C2D3E4F5060708090A0B /* KeychainStore.swift */; };
 		B1BE2208D9A301D4F9D1A0DC /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E71BB0D0B9CB60C01FF18FE5 /* AppModel.swift */; };
 		B68E491FF0BD24E2B616B10D /* whisper in Frameworks */ = {isa = PBXBuildFile; productRef = 2915C1652BF9FD08A1E74229 /* whisper */; };
 		C8362F9E81A2164209C16FD0 /* SoundPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71DD00AF4B4A2D752EA1DB4 /* SoundPlayer.swift */; };
+		D4E5F60708090A0B0C0D0E0F /* OpenAIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C2D3E4F5060708090A0B0C /* OpenAIClient.swift */; };
 		DD64B2EE39177A76E14A56A3 /* Recorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E9F0C4F5DC59F6E7D57376 /* Recorder.swift */; };
 		DF7BD834844FA680AD1B66C3 /* Dispatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8F99ACF62E3DA0AF46DD042 /* Dispatcher.swift */; };
 		F2E88DF2A0114B7FAC0CAB90 /* WhisperCppTranscriber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 217E0FA7AFF094F7DDD22B61 /* WhisperCppTranscriber.swift */; };
@@ -41,8 +43,10 @@
 		6F20FFBF5FED51F95CA915DE /* SettingsWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsWindowController.swift; sourceTree = "<group>"; };
 		752F1D8E26B3665C382B16EC /* UsualToneOfVoice.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UsualToneOfVoice.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D422D4416877A69ED843CCA /* InsetTextEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsetTextEditor.swift; sourceTree = "<group>"; };
+		A0B1C2D3E4F5060708090A0B /* KeychainStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainStore.swift; sourceTree = "<group>"; };
 		A2D5D0902B6B13613E610831 /* MenuBarIconProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarIconProvider.swift; sourceTree = "<group>"; };
 		A8E9F0C4F5DC59F6E7D57376 /* Recorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recorder.swift; sourceTree = "<group>"; };
+		B1C2D3E4F5060708090A0B0C /* OpenAIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAIClient.swift; sourceTree = "<group>"; };
 		C6FFB53B9BBFA2DFE7918DF1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CA91A361265459B067B1FA52 /* SettingsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsStore.swift; sourceTree = "<group>"; };
 		D0B2C472B0EC5B58614FD6BE /* WhisperBinary */ = {isa = PBXFileReference; lastKnownFileType = folder; name = WhisperBinary; path = Packages/WhisperBinary; sourceTree = SOURCE_ROOT; };
@@ -100,7 +104,9 @@
 				5A606811989EDABFFF0BE682 /* LogStore.swift */,
 				A2D5D0902B6B13613E610831 /* MenuBarIconProvider.swift */,
 				3C3A47E4094CEB42DD687A65 /* ModelManager.swift */,
+				B1C2D3E4F5060708090A0B0C /* OpenAIClient.swift */,
 				A8E9F0C4F5DC59F6E7D57376 /* Recorder.swift */,
+				A0B1C2D3E4F5060708090A0B /* KeychainStore.swift */,
 				CA91A361265459B067B1FA52 /* SettingsStore.swift */,
 				6F20FFBF5FED51F95CA915DE /* SettingsWindowController.swift */,
 				F71DD00AF4B4A2D752EA1DB4 /* SoundPlayer.swift */,
@@ -213,10 +219,12 @@
 				DF7BD834844FA680AD1B66C3 /* Dispatcher.swift in Sources */,
 				5CC484DECAB3B658F63200BA /* HotKeyMonitor.swift in Sources */,
 				9AEC5FC3697FE6E73FAB8F7C /* InsetTextEditor.swift in Sources */,
+				B2C3D4E5F60708090A0B0C0D /* KeychainStore.swift in Sources */,
 				13A2F82A968FC380C28488ED /* LogStore.swift in Sources */,
 				42040575F906E4DFE8CCD84E /* MenuBarIconProvider.swift in Sources */,
 				296F811A180BD82274007C4A /* MenuContentView.swift in Sources */,
 				474776B0FB81A9CB56A842B5 /* ModelManager.swift in Sources */,
+				D4E5F60708090A0B0C0D0E0F /* OpenAIClient.swift in Sources */,
 				DD64B2EE39177A76E14A56A3 /* Recorder.swift in Sources */,
 				31468CAAFD0F7BA425BD5DFB /* SettingsStore.swift in Sources */,
 				9C499F2E9E0A901F90DFB0F7 /* SettingsView.swift in Sources */,
