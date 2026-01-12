@@ -25,17 +25,6 @@ struct SettingsView: View {
                         TextField("ja", text: $settings.language)
                             .textFieldStyle(.roundedBorder)
                     }
-                    Text("Initial Prompt")
-                        .font(.system(size: 12, weight: .semibold))
-                    Text("用語や口調に寄せるための弱いヒントです。効果は保証されず、要約や書き換えには向きません。")
-                        .font(.system(size: 11))
-                        .foregroundStyle(.secondary)
-                    InsetTextEditor(text: $settings.initialPrompt, fontSize: 12, inset: 6)
-                        .frame(minHeight: 90)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 6)
-                                .stroke(Color.secondary.opacity(0.2))
-                        )
                 }
                 .padding(.top, 4)
             }
@@ -54,10 +43,67 @@ struct SettingsView: View {
                 }
             }
 
-            Button("Open User Dictionary") {
-                UserDictionary.ensureDefaultFile()
-                NSWorkspace.shared.open(UserDictionary.dictionaryURL())
+            GroupBox("OpenAI") {
+                VStack(alignment: .leading, spacing: 8) {
+                    Toggle("Enable OpenAI", isOn: $settings.openAIEnabled)
+                    LabeledContent("API Key") {
+                        TextField("sk-...", text: $settings.openAIKey)
+                            .textFieldStyle(.roundedBorder)
+                    }
+                    if settings.openAIEnabled && settings.openAIKey.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                        Text("API key is required.")
+                            .font(.system(size: 11))
+                            .foregroundStyle(.red)
+                    }
+                    LabeledContent("Model") {
+                        Picker("", selection: $settings.openAIModel) {
+                            ForEach(OpenAIModel.allCases) { model in
+                                Text(model.displayName).tag(model.rawValue)
+                            }
+                        }
+                        .labelsHidden()
+                    }
+                    Text("Prompt")
+                        .font(.system(size: 12, weight: .semibold))
+                    InsetTextEditor(text: $settings.openAIUserPrompt, fontSize: 12, inset: 6)
+                        .frame(minHeight: 70)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 6)
+                                .stroke(Color.secondary.opacity(0.2))
+                        )
+                    HStack {
+                        Button("Reset") {
+                            settings.resetOpenAIUserPrompt()
+                        }
+                        .buttonStyle(.link)
+                        Spacer()
+                    }
+                    Divider()
+                    HStack(spacing: 8) {
+                        Button("Open User Dictionary") {
+                            UserDictionary.ensureDefaultFile()
+                            NSWorkspace.shared.open(UserDictionary.dictionaryURL())
+                        }
+                        Button("OpenAI Test") {
+                            model.runOpenAITest()
+                        }
+                        Button("Open Logs") {
+                            model.openLogFile()
+                        }
+                    }
+                    if let message = model.openAITestMessage, !message.isEmpty {
+                        Text(message)
+                            .font(.system(size: 11))
+                            .foregroundStyle(model.openAITestIsError ? .red : .secondary)
+                    }
+                    if let error = settings.openAIKeyError, !error.isEmpty {
+                        Text(error)
+                            .font(.system(size: 11))
+                            .foregroundStyle(.red)
+                    }
+                }
             }
+
         }
         .padding(20)
         .frame(minWidth: 520)

@@ -27,7 +27,7 @@ struct MenuContentView: View {
             }
 
             if !model.lastTranscript.isEmpty {
-                Button("Copy & Paste Last Transcript") {
+                Button("Copy & Paste Last Output") {
                     do {
                         _ = try Dispatcher().dispatch(text: model.lastTranscript, autoPaste: model.settings.autoPaste)
                     } catch {

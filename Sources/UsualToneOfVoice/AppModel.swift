@@ -15,6 +15,8 @@ final class AppModel: ObservableObject {
     @Published var modelDownloadStatusText: String? = nil
     @Published var modelDownloadProgress: Double? = nil
     @Published var iconPhase: Bool = false
+    @Published var openAITestMessage: String? = nil
+    @Published var openAITestIsError: Bool = false
 
     let settings: SettingsStore
     let logger: LogStore
@@ -22,6 +24,7 @@ final class AppModel: ObservableObject {
     private let recorder = Recorder()
     private let whisperCppTranscriber = WhisperCppTranscriber()
     private let dispatcher = Dispatcher()
+    private let openAIClient = OpenAIClient()
     private var hotKeyMonitor: HotKeyMonitor?
     private let modelManager = ModelManager.shared
     private var iconTimer: DispatchSourceTimer?
@@ -117,7 +120,10 @@ final class AppModel: ObservableObject {
 
         let language = settings.language.isEmpty ? nil : settings.language
         let autoPaste = settings.autoPaste
-        let initialPrompt = settings.initialPrompt
+        let openAIEnabled = settings.openAIEnabled
+        let openAIKey = settings.openAIKey.trimmingCharacters(in: .whitespacesAndNewlines)
+        let openAIModel = settings.openAIModel.trimmingCharacters(in: .whitespacesAndNewlines)
+        let openAIUserPrompt = settings.openAIUserPrompt
         let whisperCppModelPath = ModelManager.defaultModelPath().path
         let beamSize = 8
         let bestOf = 8
@@ -132,13 +138,13 @@ final class AppModel: ObservableObject {
             return
         }
 
-        Task.detached(priority: .userInitiated) { [whisperCppTranscriber, dispatcher] in
+        Task.detached(priority: .userInitiated) { [whisperCppTranscriber, dispatcher, openAIClient] in
             do {
                 let rawText = try whisperCppTranscriber.transcribe(
                     audioURL: audioURL,
                     modelPath: whisperCppModelPath,
                     language: language,
-                    initialPrompt: initialPrompt,
+                    initialPrompt: "",
                     chunkDuration: 0,
                     bestOf: bestOf,
                     beamSize: beamSize,
@@ -147,16 +153,62 @@ final class AppModel: ObservableObject {
                     noFallback: noFallback
                 )
                 let text = TextNormalizer.normalize(rawText)
+                var outputText = text
+                var openAIErrorMessage: String? = nil
+
+                if openAIEnabled {
+                    if openAIKey.isEmpty {
+                        openAIErrorMessage = "OpenAI enabled but API key is missing"
+                        await MainActor.run {
+                            self.notify(title: "OpenAI Error", body: "OpenAI is enabled but no API key is set.")
+                            self.log(openAIErrorMessage ?? "")
+                        }
+                    } else {
+                        let resolvedModel = OpenAIModel(rawValue: openAIModel)?.rawValue ?? OpenAIClient.defaultModel
+                        let trimmedUserPrompt = openAIUserPrompt.trimmingCharacters(in: .whitespacesAndNewlines)
+                        let combinedSystemPrompt: String
+                        if trimmedUserPrompt.isEmpty {
+                            combinedSystemPrompt = OpenAIClient.defaultSystemPrompt
+                        } else {
+                            combinedSystemPrompt = OpenAIClient.defaultSystemPrompt + "\n\n追加の指示:\n" + trimmedUserPrompt
+                        }
+                        await MainActor.run {
+                            self.log("Requesting OpenAI response...")
+                        }
+                        let temperature = OpenAIClient.supportsTemperature(model: resolvedModel)
+                            ? OpenAIClient.defaultTemperature
+                            : nil
+                        let maxOutputTokens = OpenAIClient.prefersUnboundedOutput(model: resolvedModel)
+                            ? nil
+                            : OpenAIClient.defaultMaxOutputTokens
+                        do {
+                            outputText = try await openAIClient.generateResponse(
+                                input: text,
+                                apiKey: openAIKey,
+                                model: resolvedModel,
+                                systemPrompt: combinedSystemPrompt,
+                                maxOutputTokens: maxOutputTokens,
+                                temperature: temperature
+                            )
+                        } catch {
+                            openAIErrorMessage = "OpenAI failed: \(error.localizedDescription)"
+                            await MainActor.run {
+                                self.notify(title: "OpenAI Error", body: error.localizedDescription)
+                                self.log("OpenAI failed: \(error.localizedDescription). Using transcript.")
+                            }
+                        }
+                    }
+                }
 
                 try? FileManager.default.removeItem(at: audioURL)
 
                 await MainActor.run {
-                    self.lastTranscript = text
+                    self.lastTranscript = outputText
                     self.status = .idle
-                    self.lastError = nil
-                    self.log("Transcription complete (\(text.count) chars)")
+                    self.lastError = openAIErrorMessage
+                    self.log("Output ready (\(outputText.count) chars)")
                     do {
-                        let result = try dispatcher.dispatch(text: text, autoPaste: autoPaste)
+                        let result = try dispatcher.dispatch(text: outputText, autoPaste: autoPaste)
                         if result.didPaste {
                             self.notify(title: "Transcribed", body: "Pasted into the active app")
                         } else {
@@ -203,6 +255,65 @@ final class AppModel: ObservableObject {
     func openAccessibilitySettings() {
         guard let url = URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility") else { return }
         NSWorkspace.shared.open(url)
+    }
+
+    func openLogFile() {
+        logger.add("Opened log file")
+        NSWorkspace.shared.activateFileViewerSelecting([logger.logFileURL()])
+    }
+
+    func runOpenAITest() {
+        let openAIKey = settings.openAIKey.trimmingCharacters(in: .whitespacesAndNewlines)
+        let openAIModel = settings.openAIModel.trimmingCharacters(in: .whitespacesAndNewlines)
+        let openAIUserPrompt = settings.openAIUserPrompt
+
+        openAITestIsError = false
+        openAITestMessage = "Testing OpenAI..."
+
+        guard !openAIKey.isEmpty else {
+            openAITestIsError = true
+            openAITestMessage = "OpenAI API key is missing."
+            return
+        }
+
+        let resolvedModel = OpenAIModel(rawValue: openAIModel)?.rawValue ?? OpenAIClient.defaultModel
+        let trimmedUserPrompt = openAIUserPrompt.trimmingCharacters(in: .whitespacesAndNewlines)
+        let combinedSystemPrompt: String
+        if trimmedUserPrompt.isEmpty {
+            combinedSystemPrompt = OpenAIClient.defaultSystemPrompt
+        } else {
+            combinedSystemPrompt = OpenAIClient.defaultSystemPrompt + "\n\n追加の指示:\n" + trimmedUserPrompt
+        }
+
+        Task.detached(priority: .userInitiated) { [openAIClient, logger] in
+            do {
+                let temperature = OpenAIClient.supportsTemperature(model: resolvedModel)
+                    ? 0.0
+                    : nil
+                let maxOutputTokens = OpenAIClient.prefersUnboundedOutput(model: resolvedModel)
+                    ? nil
+                    : 80
+                let response = try await openAIClient.generateResponse(
+                    input: "えーと、今日のやることなんだけど、まず `Sources/UsualToneOfVoice/AppModel.swift` を見直してOpenAI Testの結果を確認する。それから `xcodebuild -project UsualToneOfVoiceApp.xcodeproj -scheme UsualToneOfVoice build` を一回通して、問題なければノートに貼りたい。",
+                    apiKey: openAIKey,
+                    model: resolvedModel,
+                    systemPrompt: combinedSystemPrompt,
+                    maxOutputTokens: maxOutputTokens,
+                    temperature: temperature
+                )
+                await MainActor.run {
+                    self.openAITestIsError = false
+                    self.openAITestMessage = "Success: \(response)"
+                    logger.add("OpenAI test succeeded")
+                }
+            } catch {
+                await MainActor.run {
+                    self.openAITestIsError = true
+                    self.openAITestMessage = "Error: \(error.localizedDescription)"
+                    logger.add("OpenAI test failed: \(error.localizedDescription)")
+                }
+            }
+        }
     }
 
     private func warmupDaemonIfNeeded() {
