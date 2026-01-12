@@ -21,6 +21,20 @@
                ReferencedContainer = "container:UsualToneOfVoiceApp.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "586487C5CE879DF098955AB4"
+               BuildableName = "UsualToneOfVoiceTests.xctest"
+               BlueprintName = "UsualToneOfVoiceTests"
+               ReferencedContainer = "container:UsualToneOfVoiceApp.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
@@ -74,8 +88,6 @@
             ReferencedContainer = "container:UsualToneOfVoiceApp.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
-      <CommandLineArguments>
-      </CommandLineArguments>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
