@@ -17,8 +17,6 @@ final class Dispatcher {
         }
 
         guard AXIsProcessTrusted() else {
-            let options = [kAXTrustedCheckOptionPrompt.takeRetainedValue() as String: true] as CFDictionary
-            _ = AXIsProcessTrustedWithOptions(options)
             throw DispatchError.accessibilityDenied
         }
 

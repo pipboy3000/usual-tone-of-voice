@@ -33,7 +33,6 @@ final class AppModel: ObservableObject {
         self.settings = SettingsStore()
         self.logger = LogStore()
         requestNotificationAccess()
-        ensureAccessibilityPermissionIfNeeded()
         startHotKeyMonitor()
         _ = UserDictionaryStore.shared
         configureModelManager()
@@ -89,7 +88,7 @@ final class AppModel: ObservableObject {
 
     func startRecording() async {
         guard status == .idle else { return }
-        guard await ensureMicrophoneAccess() else {
+        guard await requestMicrophoneAccess() else {
             fail("Microphone access denied", notify: true)
             return
         }
@@ -245,8 +244,14 @@ final class AppModel: ObservableObject {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]) { _, _ in }
     }
 
-    func ensureAccessibilityPermissionIfNeeded() {
+    func requestAccessibilityPermissionIfNeeded() {
         guard settings.autoPaste else { return }
+        guard !AXIsProcessTrusted() else { return }
+        let options = [kAXTrustedCheckOptionPrompt.takeRetainedValue() as String: true] as CFDictionary
+        _ = AXIsProcessTrustedWithOptions(options)
+    }
+
+    func requestAccessibilityPermission() {
         guard !AXIsProcessTrusted() else { return }
         let options = [kAXTrustedCheckOptionPrompt.takeRetainedValue() as String: true] as CFDictionary
         _ = AXIsProcessTrustedWithOptions(options)
@@ -254,6 +259,11 @@ final class AppModel: ObservableObject {
 
     func openAccessibilitySettings() {
         guard let url = URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility") else { return }
+        NSWorkspace.shared.open(url)
+    }
+
+    func openMicrophoneSettings() {
+        guard let url = URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_Microphone") else { return }
         NSWorkspace.shared.open(url)
     }
 
@@ -320,7 +330,7 @@ final class AppModel: ObservableObject {
         // openai-whisper daemon no longer used in whisper.cpp-only mode
     }
 
-    private func ensureMicrophoneAccess() async -> Bool {
+    func requestMicrophoneAccess() async -> Bool {
         let status = AVCaptureDevice.authorizationStatus(for: .audio)
         switch status {
         case .authorized:

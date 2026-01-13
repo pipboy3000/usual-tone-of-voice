@@ -1,10 +1,13 @@
 import SwiftUI
 import AppKit
 import ApplicationServices
+import AVFoundation
 
 struct SettingsView: View {
     @ObservedObject var settings: SettingsStore
     @ObservedObject var model: AppModel
+    @State private var accessibilityTrusted = AXIsProcessTrusted()
+    @State private var microphoneStatus = AVCaptureDevice.authorizationStatus(for: .audio)
 
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
@@ -25,6 +28,32 @@ struct SettingsView: View {
                         TextField("ja", text: $settings.language)
                             .textFieldStyle(.roundedBorder)
                     }
+                    HStack(spacing: 8) {
+                        Circle()
+                            .fill(microphoneStatus == .authorized ? Color.green : Color.red)
+                            .frame(width: 8, height: 8)
+                        Text(microphoneStatusText)
+                            .font(.system(size: 12))
+                            .foregroundStyle(.secondary)
+                        Spacer()
+                        if microphoneStatus == .notDetermined {
+                            Button("Request Permission") {
+                                Task {
+                                    _ = await model.requestMicrophoneAccess()
+                                    refreshPermissionStatus()
+                                }
+                            }
+                        } else if microphoneStatus == .denied || microphoneStatus == .restricted {
+                            HStack(spacing: 8) {
+                                Button("Open Microphone Settings") {
+                                    model.openMicrophoneSettings()
+                                }
+                                Button("Refresh Status") {
+                                    refreshPermissionStatus()
+                                }
+                            }
+                        }
+                    }
                 }
                 .padding(.top, 4)
             }
@@ -32,12 +61,34 @@ struct SettingsView: View {
             GroupBox("Output") {
                 VStack(alignment: .leading, spacing: 8) {
                     Toggle("Auto Paste", isOn: $settings.autoPaste)
-                    if settings.autoPaste && !AXIsProcessTrusted() {
+                    HStack(spacing: 8) {
+                        Circle()
+                            .fill(accessibilityTrusted ? Color.green : Color.red)
+                            .frame(width: 8, height: 8)
+                        Text(accessibilityTrusted ? "Accessibility: Granted" : "Accessibility: Not granted")
+                            .font(.system(size: 12))
+                            .foregroundStyle(.secondary)
+                        Spacer()
+                        if !accessibilityTrusted {
+                            Button("Request Permission") {
+                                Task {
+                                    model.requestAccessibilityPermission()
+                                    refreshPermissionStatus()
+                                }
+                            }
+                        }
+                    }
+                    if settings.autoPaste && !accessibilityTrusted {
                         Text("Auto Paste requires Accessibility permission.")
                             .font(.system(size: 12))
                             .foregroundStyle(.secondary)
-                        Button("Open Accessibility Settings") {
-                            model.openAccessibilitySettings()
+                        HStack(spacing: 8) {
+                            Button("Open Accessibility Settings") {
+                                model.openAccessibilitySettings()
+                            }
+                            Button("Refresh Status") {
+                                refreshPermissionStatus()
+                            }
                         }
                     }
                 }
@@ -108,7 +159,32 @@ struct SettingsView: View {
         .padding(20)
         .frame(minWidth: 520)
         .onChange(of: settings.autoPaste) { _, _ in
-            model.ensureAccessibilityPermissionIfNeeded()
+            model.requestAccessibilityPermissionIfNeeded()
+            refreshPermissionStatus()
+        }
+        .onAppear {
+            refreshPermissionStatus()
+        }
+        .onReceive(NotificationCenter.default.publisher(for: NSApplication.didBecomeActiveNotification)) { _ in
+            refreshPermissionStatus()
+        }
+    }
+
+    private func refreshPermissionStatus() {
+        accessibilityTrusted = AXIsProcessTrusted()
+        microphoneStatus = AVCaptureDevice.authorizationStatus(for: .audio)
+    }
+
+    private var microphoneStatusText: String {
+        switch microphoneStatus {
+        case .authorized:
+            return "Microphone: Granted"
+        case .notDetermined:
+            return "Microphone: Not requested"
+        case .denied, .restricted:
+            return "Microphone: Not granted"
+        @unknown default:
+            return "Microphone: Unknown"
         }
     }
 }
