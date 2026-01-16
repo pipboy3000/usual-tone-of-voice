@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 77;
+	objectVersion = 63;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -63,6 +63,9 @@
 		C6FFB53B9BBFA2DFE7918DF1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CA91A361265459B067B1FA52 /* SettingsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsStore.swift; sourceTree = "<group>"; };
 		D0B2C472B0EC5B58614FD6BE /* WhisperBinary */ = {isa = PBXFileReference; lastKnownFileType = folder; name = WhisperBinary; path = Packages/WhisperBinary; sourceTree = SOURCE_ROOT; };
+		A0F1C1F1A1B2C3D4E5F60701 /* Signing.base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Signing.base.xcconfig"; sourceTree = "<group>"; };
+		A0F1C1F1A1B2C3D4E5F60702 /* Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Debug.xcconfig"; sourceTree = "<group>"; };
+		A0F1C1F1A1B2C3D4E5F60703 /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Release.xcconfig"; sourceTree = "<group>"; };
 		D7D1CBC1BEE00DEFF224232A /* TextNormalizerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextNormalizerTests.swift; sourceTree = "<group>"; };
 		DC6DD09381E8BA44B755C0B0 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		E71BB0D0B9CB60C01FF18FE5 /* AppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModel.swift; sourceTree = "<group>"; };
@@ -97,11 +100,22 @@
 		1C584DEED8479745836EE9F0 = {
 			isa = PBXGroup;
 			children = (
+				A0F1C1F1A1B2C3D4E5F60710 /* Configs */,
 				1B5850A4524E75FA7945575F /* Packages */,
 				9CFD99B86AA9CFDEA5D9FD28 /* UsualToneOfVoice */,
 				4FB694C847D3B8EBC24A3623 /* UsualToneOfVoiceTests */,
 				3B6F334049AF491847CA3F12 /* Products */,
 			);
+			sourceTree = "<group>";
+		};
+		A0F1C1F1A1B2C3D4E5F60710 /* Configs */ = {
+			isa = PBXGroup;
+			children = (
+				A0F1C1F1A1B2C3D4E5F60701 /* Signing.base.xcconfig */,
+				A0F1C1F1A1B2C3D4E5F60702 /* Debug.xcconfig */,
+				A0F1C1F1A1B2C3D4E5F60703 /* Release.xcconfig */,
+			);
+			path = Configs;
 			sourceTree = "<group>";
 		};
 		3B6F334049AF491847CA3F12 /* Products */ = {
@@ -217,15 +231,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
-				LastUpgradeCheck = 1430;
-				TargetAttributes = {
-					586487C5CE879DF098955AB4 = {
-						DevelopmentTeam = "";
-					};
-					65D22810EE31DD37C54C0456 = {
-						DevelopmentTeam = "";
-					};
-				};
+				LastUpgradeCheck = 2620;
 			};
 			buildConfigurationList = CDD41BBB9DB72CE008249BED /* Build configuration list for PBXProject "UsualToneOfVoiceApp" */;
 			compatibilityVersion = "Xcode 14.0";
@@ -240,7 +246,6 @@
 			packageReferences = (
 				46CE5C4CA13C9A69D1ECF376 /* XCLocalSwiftPackageReference "Packages/WhisperBinary" */,
 			);
-			preferredProjectObjectVersion = 77;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -312,6 +317,7 @@
 /* Begin XCBuildConfiguration section */
 		1C2DD8C83FA1D7734335DFE9 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A0F1C1F1A1B2C3D4E5F60703 /* Release.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -343,15 +349,17 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGNING_ALLOWED = NO;
-				CODE_SIGNING_REQUIRED = NO;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGNING_ALLOWED = "$(inherited)";
+				CODE_SIGNING_REQUIRED = "$(inherited)";
+				CODE_SIGN_IDENTITY = "$(inherited)";
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = "$(inherited)";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -366,6 +374,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.9;
@@ -374,30 +383,59 @@
 		};
 		4EBE248165414DA0AF4E06BE /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A0F1C1F1A1B2C3D4E5F60703 /* Release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				AUTOMATION_APPLE_EVENTS = NO;
+				CODE_SIGN_IDENTITY = "$(inherited)";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "$(inherited)";
+				CODE_SIGN_STYLE = "$(inherited)";
 				COMBINE_HIDPI_IMAGES = YES;
+				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = "$(inherited)";
+				"DEVELOPMENT_TEAM[sdk=macosx*]" = "$(inherited)";
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_RESOURCE_ACCESS_AUDIO_INPUT = YES;
+				ENABLE_RESOURCE_ACCESS_CALENDARS = NO;
+				ENABLE_RESOURCE_ACCESS_CAMERA = NO;
+				ENABLE_RESOURCE_ACCESS_CONTACTS = NO;
+				ENABLE_RESOURCE_ACCESS_LOCATION = NO;
+				ENABLE_RESOURCE_ACCESS_PHOTO_LIBRARY = NO;
 				INFOPLIST_FILE = XcodeSupport/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = local.UsualToneOfVoice;
+				PRODUCT_BUNDLE_IDENTIFIER = com.asaimasami.UsualToneOfVoice;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				RUNTIME_EXCEPTION_ALLOW_DYLD_ENVIRONMENT_VARIABLES = NO;
+				RUNTIME_EXCEPTION_ALLOW_JIT = NO;
+				RUNTIME_EXCEPTION_ALLOW_UNSIGNED_EXECUTABLE_MEMORY = NO;
+				RUNTIME_EXCEPTION_DEBUGGING_TOOL = NO;
+				RUNTIME_EXCEPTION_DISABLE_EXECUTABLE_PAGE_PROTECTION = NO;
+				RUNTIME_EXCEPTION_DISABLE_LIBRARY_VALIDATION = NO;
 				SDKROOT = macosx;
 			};
 			name = Release;
 		};
 		C07D8CE82350D1A76A121FED /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A0F1C1F1A1B2C3D4E5F60703 /* Release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "$(inherited)";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "$(inherited)";
+				CODE_SIGN_STYLE = "$(inherited)";
 				COMBINE_HIDPI_IMAGES = YES;
+				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = "$(inherited)";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = local.UsualToneOfVoiceTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.asaimasami.UsualToneOfVoiceTests;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = macosx;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/UsualToneOfVoice.app/Contents/MacOS/UsualToneOfVoice";
 			};
@@ -405,30 +443,59 @@
 		};
 		E7BED4673B4B70DAB355F802 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A0F1C1F1A1B2C3D4E5F60702 /* Debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				AUTOMATION_APPLE_EVENTS = NO;
+				CODE_SIGN_IDENTITY = "$(inherited)";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "$(inherited)";
+				CODE_SIGN_STYLE = "$(inherited)";
 				COMBINE_HIDPI_IMAGES = YES;
+				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = "$(inherited)";
+				"DEVELOPMENT_TEAM[sdk=macosx*]" = "$(inherited)";
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_RESOURCE_ACCESS_AUDIO_INPUT = YES;
+				ENABLE_RESOURCE_ACCESS_CALENDARS = NO;
+				ENABLE_RESOURCE_ACCESS_CAMERA = NO;
+				ENABLE_RESOURCE_ACCESS_CONTACTS = NO;
+				ENABLE_RESOURCE_ACCESS_LOCATION = NO;
+				ENABLE_RESOURCE_ACCESS_PHOTO_LIBRARY = NO;
 				INFOPLIST_FILE = XcodeSupport/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = local.UsualToneOfVoice;
+				PRODUCT_BUNDLE_IDENTIFIER = com.asaimasami.UsualToneOfVoice;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				RUNTIME_EXCEPTION_ALLOW_DYLD_ENVIRONMENT_VARIABLES = NO;
+				RUNTIME_EXCEPTION_ALLOW_JIT = NO;
+				RUNTIME_EXCEPTION_ALLOW_UNSIGNED_EXECUTABLE_MEMORY = NO;
+				RUNTIME_EXCEPTION_DEBUGGING_TOOL = NO;
+				RUNTIME_EXCEPTION_DISABLE_EXECUTABLE_PAGE_PROTECTION = NO;
+				RUNTIME_EXCEPTION_DISABLE_LIBRARY_VALIDATION = NO;
 				SDKROOT = macosx;
 			};
 			name = Debug;
 		};
 		FA6E5B5B0B1D56D76CBA9F56 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A0F1C1F1A1B2C3D4E5F60702 /* Debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "$(inherited)";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "$(inherited)";
+				CODE_SIGN_STYLE = "$(inherited)";
 				COMBINE_HIDPI_IMAGES = YES;
+				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = "$(inherited)";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = local.UsualToneOfVoiceTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.asaimasami.UsualToneOfVoiceTests;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = macosx;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/UsualToneOfVoice.app/Contents/MacOS/UsualToneOfVoice";
 			};
@@ -436,6 +503,7 @@
 		};
 		FD3D55EA563DA2403A27E107 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A0F1C1F1A1B2C3D4E5F60702 /* Debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -467,15 +535,17 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGNING_ALLOWED = NO;
-				CODE_SIGNING_REQUIRED = NO;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGNING_ALLOWED = "$(inherited)";
+				CODE_SIGNING_REQUIRED = "$(inherited)";
+				CODE_SIGN_IDENTITY = "$(inherited)";
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = "$(inherited)";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -497,6 +567,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.9;
