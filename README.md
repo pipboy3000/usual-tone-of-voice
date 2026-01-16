@@ -13,17 +13,19 @@ Capture your spoken thoughts quickly, transcribe them locally, and paste the tex
 - 📋 Clipboard + optional auto paste
 - 🤖 Optional OpenAI post-processing (API key stored in Keychain)
 
-## Build with Xcode 🛠️
-Open `UsualToneOfVoiceApp.xcodeproj` in Xcode and run the app target.
-The first build will download the prebuilt whisper.cpp XCFramework via Swift Package Manager.
-
 ## Swift Package (CLI only) 🧩
 Opening `Package.swift` builds a CLI executable (no .app bundle, so Accessibility cannot be granted).
-If you still want to run the CLI target:
+If you just want to try it quickly, this is the easiest path:
 
 ```bash
 swift run
 ```
+
+## Build with Xcode 🛠️
+Open `UsualToneOfVoiceApp.xcodeproj` in Xcode and run the app target.
+The first build will download the prebuilt whisper.cpp XCFramework via Swift Package Manager.
+Depending on your signing setup, you may need local signing overrides:
+`Configs/Debug.local.xcconfig` and `Configs/Release.local.xcconfig`.
 
 ## Required macOS permissions
 - Microphone access (recording)
