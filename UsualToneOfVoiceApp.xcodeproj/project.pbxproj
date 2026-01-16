@@ -57,15 +57,15 @@
 		6F20FFBF5FED51F95CA915DE /* SettingsWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsWindowController.swift; sourceTree = "<group>"; };
 		752F1D8E26B3665C382B16EC /* UsualToneOfVoice.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UsualToneOfVoice.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D422D4416877A69ED843CCA /* InsetTextEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsetTextEditor.swift; sourceTree = "<group>"; };
+		A0F1C1F1A1B2C3D4E5F60701 /* Signing.base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Signing.base.xcconfig; sourceTree = "<group>"; };
+		A0F1C1F1A1B2C3D4E5F60702 /* Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
+		A0F1C1F1A1B2C3D4E5F60703 /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
 		A2D5D0902B6B13613E610831 /* MenuBarIconProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarIconProvider.swift; sourceTree = "<group>"; };
 		A8E9F0C4F5DC59F6E7D57376 /* Recorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recorder.swift; sourceTree = "<group>"; };
 		C2D69569514C7AAE87CFCE36 /* ModelManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelManagerTests.swift; sourceTree = "<group>"; };
 		C6FFB53B9BBFA2DFE7918DF1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CA91A361265459B067B1FA52 /* SettingsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsStore.swift; sourceTree = "<group>"; };
 		D0B2C472B0EC5B58614FD6BE /* WhisperBinary */ = {isa = PBXFileReference; lastKnownFileType = folder; name = WhisperBinary; path = Packages/WhisperBinary; sourceTree = SOURCE_ROOT; };
-		A0F1C1F1A1B2C3D4E5F60701 /* Signing.base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Signing.base.xcconfig"; sourceTree = "<group>"; };
-		A0F1C1F1A1B2C3D4E5F60702 /* Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Debug.xcconfig"; sourceTree = "<group>"; };
-		A0F1C1F1A1B2C3D4E5F60703 /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Release.xcconfig"; sourceTree = "<group>"; };
 		D7D1CBC1BEE00DEFF224232A /* TextNormalizerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextNormalizerTests.swift; sourceTree = "<group>"; };
 		DC6DD09381E8BA44B755C0B0 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		E71BB0D0B9CB60C01FF18FE5 /* AppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModel.swift; sourceTree = "<group>"; };
@@ -106,16 +106,6 @@
 				4FB694C847D3B8EBC24A3623 /* UsualToneOfVoiceTests */,
 				3B6F334049AF491847CA3F12 /* Products */,
 			);
-			sourceTree = "<group>";
-		};
-		A0F1C1F1A1B2C3D4E5F60710 /* Configs */ = {
-			isa = PBXGroup;
-			children = (
-				A0F1C1F1A1B2C3D4E5F60701 /* Signing.base.xcconfig */,
-				A0F1C1F1A1B2C3D4E5F60702 /* Debug.xcconfig */,
-				A0F1C1F1A1B2C3D4E5F60703 /* Release.xcconfig */,
-			);
-			path = Configs;
 			sourceTree = "<group>";
 		};
 		3B6F334049AF491847CA3F12 /* Products */ = {
@@ -163,6 +153,16 @@
 			);
 			name = UsualToneOfVoice;
 			path = Sources/UsualToneOfVoice;
+			sourceTree = "<group>";
+		};
+		A0F1C1F1A1B2C3D4E5F60710 /* Configs */ = {
+			isa = PBXGroup;
+			children = (
+				A0F1C1F1A1B2C3D4E5F60701 /* Signing.base.xcconfig */,
+				A0F1C1F1A1B2C3D4E5F60702 /* Debug.xcconfig */,
+				A0F1C1F1A1B2C3D4E5F60703 /* Release.xcconfig */,
+			);
+			path = Configs;
 			sourceTree = "<group>";
 		};
 		A9F92170B1C47115DC0F7FCC /* assets */ = {
@@ -353,7 +353,6 @@
 				CODE_SIGNING_REQUIRED = "$(inherited)";
 				CODE_SIGN_IDENTITY = "$(inherited)";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = "$(inherited)";
@@ -369,7 +368,6 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 0.1.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -402,6 +400,8 @@
 				ENABLE_RESOURCE_ACCESS_LOCATION = NO;
 				ENABLE_RESOURCE_ACCESS_PHOTO_LIBRARY = NO;
 				INFOPLIST_FILE = XcodeSupport/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Usual Tone of Voice";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -462,6 +462,8 @@
 				ENABLE_RESOURCE_ACCESS_LOCATION = NO;
 				ENABLE_RESOURCE_ACCESS_PHOTO_LIBRARY = NO;
 				INFOPLIST_FILE = XcodeSupport/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Usual Tone of Voice";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -539,7 +541,6 @@
 				CODE_SIGNING_REQUIRED = "$(inherited)";
 				CODE_SIGN_IDENTITY = "$(inherited)";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = "$(inherited)";
@@ -561,7 +562,6 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 0.1.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
