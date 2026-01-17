@@ -27,6 +27,51 @@ The first build will download the prebuilt whisper.cpp XCFramework via Swift Pac
 Depending on your signing setup, you may need local signing overrides:
 `Configs/Debug.local.xcconfig` and `Configs/Release.local.xcconfig`.
 
+## Direct Distribution (DMG) 📦
+This repo includes a one-command DMG builder that also signs, notarizes, and staples the DMG.
+
+Prerequisites:
+- Developer ID Application certificate installed in Keychain
+- `create-dmg` installed (`brew install create-dmg`)
+- A notarytool keychain profile (example name: `AC_PROFILE`)
+
+Create a notarytool profile once:
+```bash
+xcrun notarytool store-credentials "AC_PROFILE" \
+  --apple-id "you@example.com" \
+  --team-id "YOUR_TEAM_ID" \
+  --password "app-specific-password"
+```
+
+Build the DMG:
+```bash
+make dmg
+```
+
+Optional overrides:
+```bash
+APP_PATH="/path/to/UsualToneOfVoice.app" \
+DMG_PATH="/path/to/UsualToneOfVoice.dmg" \
+VOLNAME="UsualToneOfVoice" \
+IDENTITY="Developer ID Application: Your Name (TEAMID)" \
+PROFILE="AC_PROFILE" \
+./scripts/make-dmg.sh
+```
+
+Layout tweaks (no background image by default):
+```bash
+WINDOW_SIZE="660 400" \
+APP_ICON_POS="180 170" \
+APPS_LINK_POS="480 170" \
+./scripts/make-dmg.sh
+```
+
+If `create-dmg` fails with Finder/AppleScript errors, allow your terminal app to control Finder
+in System Settings → Privacy & Security → Automation, or skip Finder prettifying:
+```bash
+SKIP_FINDER_PRETTIFY=1 ./scripts/make-dmg.sh
+```
+
 ## Required macOS permissions
 - Microphone access (recording)
 - Accessibility (auto paste)

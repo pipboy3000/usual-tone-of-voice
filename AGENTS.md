@@ -16,6 +16,7 @@
 - `xcodebuild -project UsualToneOfVoiceApp.xcodeproj -scheme UsualToneOfVoiceTests -destination 'platform=macOS' test` — run the app test scheme via Xcodebuild.
 - `open ~/Library/Developer/Xcode/DerivedData/*/Build/Products/Debug/UsualToneOfVoice.app` — launch the built app after an Xcodebuild.
 - `xcodebuild -project UsualToneOfVoiceApp.xcodeproj -scheme UsualToneOfVoice -configuration Release -archivePath build/UsualToneOfVoice.xcarchive archive` — create an archive (requires signing configuration).
+- `make dmg` — build a signed/notarized DMG using `scripts/make-dmg.sh` (requires `create-dmg` + notarytool keychain profile).
 - Xcode: open `UsualToneOfVoiceApp.xcodeproj` and run the app target for the menu bar UI.
   - First build downloads the prebuilt whisper.cpp XCFramework via SPM.
   - If signing is required, create `Configs/Debug.local.xcconfig` or `Configs/Release.local.xcconfig` overrides.
@@ -36,6 +37,7 @@
 - Prefer one logical change per commit; include context in the body when the why isn’t obvious.
 - PRs should include a clear description, testing notes, and screenshots for UI changes.
 - Link related issues when applicable.
+- Before committing, scan changes for leaked secrets or credentials.
 
 ## Configuration & Runtime Notes
 - The app stores OpenAI keys in macOS Keychain (optional feature).

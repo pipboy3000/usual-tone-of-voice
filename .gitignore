@@ -22,6 +22,8 @@ build/
 
 # Misc
 .tmp_module_cache/
+/*.app
+/*.dmg
 
 # Local-only signing overrides
 Configs/*.local.xcconfig
