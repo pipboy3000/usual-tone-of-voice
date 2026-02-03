@@ -16,6 +16,7 @@
 		42040575F906E4DFE8CCD84E /* MenuBarIconProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2D5D0902B6B13613E610831 /* MenuBarIconProvider.swift */; };
 		46BF602D01D038C3E79F01C9 /* TextNormalizerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7D1CBC1BEE00DEFF224232A /* TextNormalizerTests.swift */; };
 		474776B0FB81A9CB56A842B5 /* ModelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C3A47E4094CEB42DD687A65 /* ModelManager.swift */; };
+		4A7265B8B0D54D58935AA15A /* LaunchAtLoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32EF2CDD5AEB43D7B17BFE8B /* LaunchAtLoginManager.swift */; };
 		5CC484DECAB3B658F63200BA /* HotKeyMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290B589D2F3FD34F991E4074 /* HotKeyMonitor.swift */; };
 		6EA3610705EB42D3F22F8414 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C6FFB53B9BBFA2DFE7918DF1 /* Assets.xcassets */; };
 		8BFBA52E32C059A7A0D94D8B /* UsualToneOfVoiceApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB0F71FCAFDAADBFB0BADB0 /* UsualToneOfVoiceApp.swift */; };
@@ -51,6 +52,7 @@
 		2DB0F71FCAFDAADBFB0BADB0 /* UsualToneOfVoiceApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsualToneOfVoiceApp.swift; sourceTree = "<group>"; };
 		2EEE5CB32582D550EE6C1DB3 /* UserDictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDictionary.swift; sourceTree = "<group>"; };
 		3C3A47E4094CEB42DD687A65 /* ModelManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelManager.swift; sourceTree = "<group>"; };
+		32EF2CDD5AEB43D7B17BFE8B /* LaunchAtLoginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchAtLoginManager.swift; sourceTree = "<group>"; };
 		583AE597F69AA9CA866298F4 /* TextNormalizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextNormalizer.swift; sourceTree = "<group>"; };
 		5A606811989EDABFFF0BE682 /* LogStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogStore.swift; sourceTree = "<group>"; };
 		6749D4838EFD67DA7117EFF9 /* icon-1768045224696.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-1768045224696.png"; sourceTree = "<group>"; };
@@ -136,6 +138,7 @@
 				F8F99ACF62E3DA0AF46DD042 /* Dispatcher.swift */,
 				290B589D2F3FD34F991E4074 /* HotKeyMonitor.swift */,
 				2351F30EAA04E56947D87091 /* KeychainStore.swift */,
+				32EF2CDD5AEB43D7B17BFE8B /* LaunchAtLoginManager.swift */,
 				5A606811989EDABFFF0BE682 /* LogStore.swift */,
 				A2D5D0902B6B13613E610831 /* MenuBarIconProvider.swift */,
 				3C3A47E4094CEB42DD687A65 /* ModelManager.swift */,
@@ -287,6 +290,7 @@
 				5CC484DECAB3B658F63200BA /* HotKeyMonitor.swift in Sources */,
 				9AEC5FC3697FE6E73FAB8F7C /* InsetTextEditor.swift in Sources */,
 				D27DFABF4C7D25E03E9B549F /* KeychainStore.swift in Sources */,
+				4A7265B8B0D54D58935AA15A /* LaunchAtLoginManager.swift in Sources */,
 				13A2F82A968FC380C28488ED /* LogStore.swift in Sources */,
 				42040575F906E4DFE8CCD84E /* MenuBarIconProvider.swift in Sources */,
 				296F811A180BD82274007C4A /* MenuContentView.swift in Sources */,

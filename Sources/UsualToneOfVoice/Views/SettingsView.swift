@@ -8,9 +8,29 @@ struct SettingsView: View {
     @ObservedObject var model: AppModel
     @State private var accessibilityTrusted = AXIsProcessTrusted()
     @State private var microphoneStatus = AVCaptureDevice.authorizationStatus(for: .audio)
+    @StateObject private var launchAtLoginManager = LaunchAtLoginManager()
 
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
+            GroupBox("App") {
+                VStack(alignment: .leading, spacing: 8) {
+                    Toggle("Launch at Login", isOn: Binding(
+                        get: { launchAtLoginManager.isEnabled },
+                        set: { launchAtLoginManager.setEnabled($0) }
+                    ))
+                    if let message = launchAtLoginManager.statusMessage {
+                        Text(message)
+                            .font(.system(size: 11))
+                            .foregroundStyle(.secondary)
+                    }
+                    if let error = launchAtLoginManager.lastError, !error.isEmpty {
+                        Text(error)
+                            .font(.system(size: 11))
+                            .foregroundStyle(.red)
+                    }
+                }
+                .padding(.top, 4)
+            }
             if let status = model.modelDownloadStatusText {
                 VStack(alignment: .leading, spacing: 6) {
                     Text(status)
@@ -164,9 +184,11 @@ struct SettingsView: View {
         }
         .onAppear {
             refreshPermissionStatus()
+            launchAtLoginManager.refresh()
         }
         .onReceive(NotificationCenter.default.publisher(for: NSApplication.didBecomeActiveNotification)) { _ in
             refreshPermissionStatus()
+            launchAtLoginManager.refresh()
         }
     }
 
