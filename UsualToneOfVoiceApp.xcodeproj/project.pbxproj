@@ -25,8 +25,10 @@
 		9C499F2E9E0A901F90DFB0F7 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC6DD09381E8BA44B755C0B0 /* SettingsView.swift */; };
 		A1FE82FBCAF16EA6E21FA6B4 /* TextNormalizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 583AE597F69AA9CA866298F4 /* TextNormalizer.swift */; };
 		B1BE2208D9A301D4F9D1A0DC /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E71BB0D0B9CB60C01FF18FE5 /* AppModel.swift */; };
+		B8E1C2D3F4A5968778695A4B /* AudioSilenceAnalyzer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F9A6D12B3C4D5E6F708901 /* AudioSilenceAnalyzer.swift */; };
 		B68E491FF0BD24E2B616B10D /* whisper in Frameworks */ = {isa = PBXBuildFile; productRef = 2915C1652BF9FD08A1E74229 /* whisper */; };
 		C8362F9E81A2164209C16FD0 /* SoundPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F71DD00AF4B4A2D752EA1DB4 /* SoundPlayer.swift */; };
+		D2E3F405162738495A6B7C8D /* AudioSilenceAnalyzerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1D2E3F405162738495A6B7C /* AudioSilenceAnalyzerTests.swift */; };
 		D27DFABF4C7D25E03E9B549F /* KeychainStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2351F30EAA04E56947D87091 /* KeychainStore.swift */; };
 		DD64B2EE39177A76E14A56A3 /* Recorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8E9F0C4F5DC59F6E7D57376 /* Recorder.swift */; };
 		DF7BD834844FA680AD1B66C3 /* Dispatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8F99ACF62E3DA0AF46DD042 /* Dispatcher.swift */; };
@@ -63,7 +65,9 @@
 		A0F1C1F1A1B2C3D4E5F60702 /* Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
 		A0F1C1F1A1B2C3D4E5F60703 /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
 		A2D5D0902B6B13613E610831 /* MenuBarIconProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarIconProvider.swift; sourceTree = "<group>"; };
+		A7F9A6D12B3C4D5E6F708901 /* AudioSilenceAnalyzer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioSilenceAnalyzer.swift; sourceTree = "<group>"; };
 		A8E9F0C4F5DC59F6E7D57376 /* Recorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recorder.swift; sourceTree = "<group>"; };
+		C1D2E3F405162738495A6B7C /* AudioSilenceAnalyzerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioSilenceAnalyzerTests.swift; sourceTree = "<group>"; };
 		C2D69569514C7AAE87CFCE36 /* ModelManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelManagerTests.swift; sourceTree = "<group>"; };
 		C6FFB53B9BBFA2DFE7918DF1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CA91A361265459B067B1FA52 /* SettingsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsStore.swift; sourceTree = "<group>"; };
@@ -122,6 +126,7 @@
 		4FB694C847D3B8EBC24A3623 /* UsualToneOfVoiceTests */ = {
 			isa = PBXGroup;
 			children = (
+				C1D2E3F405162738495A6B7C /* AudioSilenceAnalyzerTests.swift */,
 				C2D69569514C7AAE87CFCE36 /* ModelManagerTests.swift */,
 				D7D1CBC1BEE00DEFF224232A /* TextNormalizerTests.swift */,
 				FD402C6848365E9E56F11487 /* UserDictionaryTests.swift */,
@@ -134,6 +139,7 @@
 			isa = PBXGroup;
 			children = (
 				E71BB0D0B9CB60C01FF18FE5 /* AppModel.swift */,
+				A7F9A6D12B3C4D5E6F708901 /* AudioSilenceAnalyzer.swift */,
 				C6FFB53B9BBFA2DFE7918DF1 /* Assets.xcassets */,
 				F8F99ACF62E3DA0AF46DD042 /* Dispatcher.swift */,
 				290B589D2F3FD34F991E4074 /* HotKeyMonitor.swift */,
@@ -275,6 +281,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D2E3F405162738495A6B7C8D /* AudioSilenceAnalyzerTests.swift in Sources */,
 				E9A1777873C9F0CC014C25D7 /* ModelManagerTests.swift in Sources */,
 				46BF602D01D038C3E79F01C9 /* TextNormalizerTests.swift in Sources */,
 				093CD8CEDEEC6E1914415663 /* UserDictionaryTests.swift in Sources */,
@@ -286,6 +293,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B1BE2208D9A301D4F9D1A0DC /* AppModel.swift in Sources */,
+				B8E1C2D3F4A5968778695A4B /* AudioSilenceAnalyzer.swift in Sources */,
 				DF7BD834844FA680AD1B66C3 /* Dispatcher.swift in Sources */,
 				5CC484DECAB3B658F63200BA /* HotKeyMonitor.swift in Sources */,
 				9AEC5FC3697FE6E73FAB8F7C /* InsetTextEditor.swift in Sources */,
