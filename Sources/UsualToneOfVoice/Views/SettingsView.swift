@@ -26,6 +26,17 @@ struct SettingsView: View {
                         }
                         .labelsHidden()
                     }
+                    LabeledContent("Background Noise Filter") {
+                        Picker("", selection: $settings.silenceDetectionSensitivity) {
+                            ForEach(SilenceDetectionSensitivity.allCases) { option in
+                                Text(option.displayName).tag(option)
+                            }
+                        }
+                        .labelsHidden()
+                    }
+                    Text(settings.silenceDetectionSensitivity.helperText)
+                        .font(.system(size: 11))
+                        .foregroundStyle(.secondary)
                     if let message = launchAtLoginManager.statusMessage {
                         Text(message)
                             .font(.system(size: 11))

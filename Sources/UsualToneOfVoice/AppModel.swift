@@ -33,6 +33,10 @@ final class AppModel: ObservableObject {
     private var hasPromptedForCurrentSilence = false
     private var isSilencePromptVisible = false
 
+    private var silenceThresholdDB: Float {
+        settings.silenceDetectionSensitivity.thresholdDB
+    }
+
     init() {
         self.settings = SettingsStore()
         self.logger = LogStore()
@@ -393,7 +397,7 @@ final class AppModel: ObservableObject {
         guard status == .recording else { return }
         guard let averagePower = recorder.averagePower() else { return }
 
-        if averagePower <= SilenceMonitoring.silenceThresholdDB {
+        if averagePower <= silenceThresholdDB {
             continuousSilenceDuration += SilenceMonitoring.pollInterval
         } else {
             continuousSilenceDuration = 0
@@ -443,7 +447,7 @@ final class AppModel: ObservableObject {
         do {
             let analysis = try AudioSilenceAnalyzer.analyze(
                 url: audioURL,
-                silenceThresholdDB: SilenceMonitoring.silenceThresholdDB
+                silenceThresholdDB: silenceThresholdDB
             )
             return analysis.activeDuration < SilenceMonitoring.minSpeechDuration
         } catch {
@@ -530,7 +534,6 @@ final class AppModel: ObservableObject {
 }
 
 private enum SilenceMonitoring {
-    static let silenceThresholdDB: Float = -45
     static let minSpeechDuration: TimeInterval = 0.35
     static let promptAfter: TimeInterval = 90
     static let pollInterval: TimeInterval = 1
