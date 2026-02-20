@@ -18,6 +18,14 @@ struct SettingsView: View {
                         get: { launchAtLoginManager.isEnabled },
                         set: { launchAtLoginManager.setEnabled($0) }
                     ))
+                    LabeledContent("Recording Shortcut") {
+                        Picker("", selection: $settings.recordingHotKey) {
+                            ForEach(RecordingHotKey.allCases) { hotKey in
+                                Text(hotKey.displayName).tag(hotKey)
+                            }
+                        }
+                        .labelsHidden()
+                    }
                     if let message = launchAtLoginManager.statusMessage {
                         Text(message)
                             .font(.system(size: 11))
