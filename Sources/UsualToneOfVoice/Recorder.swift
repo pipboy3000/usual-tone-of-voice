@@ -17,6 +17,7 @@ final class Recorder {
         ]
 
         let recorder = try AVAudioRecorder(url: url, settings: settings)
+        recorder.isMeteringEnabled = true
         recorder.prepareToRecord()
 
         if !recorder.record() {
@@ -33,6 +34,12 @@ final class Recorder {
         recorder = nil
         currentURL = nil
         return url
+    }
+
+    func averagePower() -> Float? {
+        guard let recorder else { return nil }
+        recorder.updateMeters()
+        return recorder.averagePower(forChannel: 0)
     }
 
     private func nextRecordingURL() throws -> URL {
