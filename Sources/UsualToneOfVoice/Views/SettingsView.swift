@@ -134,6 +134,12 @@ struct SettingsView: View {
                         }
                         .labelsHidden()
                     }
+                    HStack {
+                        Button("OpenAI Test") {
+                            model.runOpenAITest()
+                        }
+                        Spacer()
+                    }
                     Text("Prompt")
                         .font(.system(size: 12, weight: .semibold))
                     InsetTextEditor(text: $settings.openAIUserPrompt, fontSize: 12, inset: 6)
@@ -154,9 +160,6 @@ struct SettingsView: View {
                         Button("Open User Dictionary") {
                             UserDictionary.ensureDefaultFile()
                             NSWorkspace.shared.open(UserDictionary.dictionaryURL())
-                        }
-                        Button("OpenAI Test") {
-                            model.runOpenAITest()
                         }
                         Button("Open Logs") {
                             model.openLogFile()
