@@ -28,6 +28,14 @@ final class AppModel: ObservableObject {
     private var hotKeyMonitor: HotKeyMonitor?
     private let modelManager = ModelManager.shared
     private var iconTimer: DispatchSourceTimer?
+    private var silenceMonitorTimer: DispatchSourceTimer?
+    private var continuousSilenceDuration: TimeInterval = 0
+    private var hasPromptedForCurrentSilence = false
+    private var isSilencePromptVisible = false
+
+    private var silenceThresholdDB: Float {
+        settings.silenceDetectionSensitivity.thresholdDB
+    }
 
     init() {
         self.settings = SettingsStore()
@@ -95,6 +103,7 @@ final class AppModel: ObservableObject {
         do {
             try recorder.start()
             status = .recording
+            startSilenceMonitor()
             lastError = nil
             log("Recording started")
             SoundPlayer.playStart()
@@ -106,6 +115,7 @@ final class AppModel: ObservableObject {
 
     func stopRecording() async {
         guard status == .recording else { return }
+        stopSilenceMonitor()
         status = .transcribing
         let audioURL = recorder.stop()
         SoundPlayer.playStop()
@@ -114,6 +124,15 @@ final class AppModel: ObservableObject {
         guard let audioURL else {
             status = .idle
             fail("No audio file captured", notify: true)
+            return
+        }
+
+        if shouldIgnoreSilentRecording(at: audioURL) {
+            try? FileManager.default.removeItem(at: audioURL)
+            status = .idle
+            lastError = nil
+            log("Ignored recording: no speech detected")
+            notify(title: "録音を破棄", body: "音声が検出されなかったため処理しませんでした。")
             return
         }
 
@@ -228,7 +247,9 @@ final class AppModel: ObservableObject {
     }
 
     private func startHotKeyMonitor() {
-        hotKeyMonitor = HotKeyMonitor { [weak self] in
+        hotKeyMonitor = HotKeyMonitor(triggerProvider: { [weak self] in
+            self?.settings.recordingHotKey ?? .doubleCommand
+        }) { [weak self] in
             Task { @MainActor in
                 self?.toggleRecording()
             }
@@ -346,6 +367,95 @@ final class AppModel: ObservableObject {
         }
     }
 
+    private func startSilenceMonitor() {
+        stopSilenceMonitor()
+        continuousSilenceDuration = 0
+        hasPromptedForCurrentSilence = false
+        isSilencePromptVisible = false
+
+        let timer = DispatchSource.makeTimerSource(queue: DispatchQueue.main)
+        timer.schedule(
+            deadline: .now() + SilenceMonitoring.pollInterval,
+            repeating: SilenceMonitoring.pollInterval
+        )
+        timer.setEventHandler { [weak self] in
+            self?.checkForLongSilence()
+        }
+        silenceMonitorTimer = timer
+        timer.resume()
+    }
+
+    private func stopSilenceMonitor() {
+        silenceMonitorTimer?.cancel()
+        silenceMonitorTimer = nil
+        continuousSilenceDuration = 0
+        hasPromptedForCurrentSilence = false
+        isSilencePromptVisible = false
+    }
+
+    private func checkForLongSilence() {
+        guard status == .recording else { return }
+        guard let averagePower = recorder.averagePower() else { return }
+
+        if averagePower <= silenceThresholdDB {
+            continuousSilenceDuration += SilenceMonitoring.pollInterval
+        } else {
+            continuousSilenceDuration = 0
+            hasPromptedForCurrentSilence = false
+        }
+
+        guard continuousSilenceDuration >= SilenceMonitoring.promptAfter,
+              !hasPromptedForCurrentSilence,
+              !isSilencePromptVisible
+        else {
+            return
+        }
+
+        hasPromptedForCurrentSilence = true
+        promptToStopLongSilenceRecording()
+    }
+
+    private func promptToStopLongSilenceRecording() {
+        guard status == .recording else { return }
+        isSilencePromptVisible = true
+        defer { isSilencePromptVisible = false }
+
+        let silenceMinutes = Int(continuousSilenceDuration / 60)
+
+        let alert = NSAlert()
+        alert.alertStyle = .warning
+        alert.messageText = "無音の録音が続いています"
+        if silenceMinutes > 0 {
+            alert.informativeText = "\(silenceMinutes)分以上ほぼ無音です。録音を停止しますか？"
+        } else {
+            alert.informativeText = "しばらく無音です。録音を停止しますか？"
+        }
+        alert.addButton(withTitle: "停止する")
+        alert.addButton(withTitle: "続ける")
+
+        NSApp.activate(ignoringOtherApps: true)
+        let response = alert.runModal()
+        if response == .alertFirstButtonReturn {
+            Task { await stopRecording() }
+        } else {
+            continuousSilenceDuration = 0
+            hasPromptedForCurrentSilence = false
+        }
+    }
+
+    private func shouldIgnoreSilentRecording(at audioURL: URL) -> Bool {
+        do {
+            let analysis = try AudioSilenceAnalyzer.analyze(
+                url: audioURL,
+                silenceThresholdDB: silenceThresholdDB
+            )
+            return analysis.activeDuration < SilenceMonitoring.minSpeechDuration
+        } catch {
+            log("Audio silence analysis failed: \(error.localizedDescription)")
+            return false
+        }
+    }
+
     private func log(_ message: String) {
         logger.add(message)
         statusLine = formatStatusLine(message)
@@ -421,6 +531,12 @@ final class AppModel: ObservableObject {
         }
         return trimmed.isEmpty ? status.label : trimmed
     }
+}
+
+private enum SilenceMonitoring {
+    static let minSpeechDuration: TimeInterval = 0.35
+    static let promptAfter: TimeInterval = 90
+    static let pollInterval: TimeInterval = 1
 }
 
 enum AppStatus: String {

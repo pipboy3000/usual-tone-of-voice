@@ -18,6 +18,25 @@ struct SettingsView: View {
                         get: { launchAtLoginManager.isEnabled },
                         set: { launchAtLoginManager.setEnabled($0) }
                     ))
+                    LabeledContent("Recording Shortcut") {
+                        Picker("", selection: $settings.recordingHotKey) {
+                            ForEach(RecordingHotKey.allCases) { hotKey in
+                                Text(hotKey.displayName).tag(hotKey)
+                            }
+                        }
+                        .labelsHidden()
+                    }
+                    LabeledContent("Background Noise Filter") {
+                        Picker("", selection: $settings.silenceDetectionSensitivity) {
+                            ForEach(SilenceDetectionSensitivity.allCases) { option in
+                                Text(option.displayName).tag(option)
+                            }
+                        }
+                        .labelsHidden()
+                    }
+                    Text(settings.silenceDetectionSensitivity.helperText)
+                        .font(.system(size: 11))
+                        .foregroundStyle(.secondary)
                     if let message = launchAtLoginManager.statusMessage {
                         Text(message)
                             .font(.system(size: 11))
