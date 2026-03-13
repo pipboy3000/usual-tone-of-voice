@@ -17,6 +17,8 @@
 - `open ~/Library/Developer/Xcode/DerivedData/*/Build/Products/Debug/UsualToneOfVoice.app` — launch the built app after an Xcodebuild.
 - `xcodebuild -project UsualToneOfVoiceApp.xcodeproj -scheme UsualToneOfVoice -configuration Release -archivePath build/UsualToneOfVoice.xcarchive archive` — create an archive (requires signing configuration).
 - `make dmg` — build a signed/notarized DMG using `scripts/make-dmg.sh` (requires `create-dmg` + notarytool keychain profile).
+- `xcrun notarytool store-credentials "AC_PROFILE" --apple-id "you@example.com" --team-id "YOUR_TEAM_ID" --password "app-specific-password"` — one-time setup for the `PROFILE` used by DMG notarization.
+- `SKIP_FINDER_PRETTIFY=1 ./scripts/make-dmg.sh` — DMG build fallback when Finder AppleScript automation fails.
 - Xcode: open `UsualToneOfVoiceApp.xcodeproj` and run the app target for the menu bar UI.
   - First build downloads the prebuilt whisper.cpp XCFramework via SPM.
   - If signing is required, create `Configs/Debug.local.xcconfig` or `Configs/Release.local.xcconfig` overrides.
